@@ -1,0 +1,21 @@
+server:
+  port: 8080
+  context-path: /
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://youxiu326.xin:3306/security?useUnicode=true&characterEncoding=utf8
+    username: youxiu326
+    password: zz123456.ZZ
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  thymeleaf:
+    cache: false
+
+
