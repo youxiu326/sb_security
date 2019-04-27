@@ -1,11 +1,10 @@
-package com.youxiu326.bean;
+package com.youxiu326.security;
 
-import com.youxiu326.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.youxiu326.bean.Role;
+import com.youxiu326.bean.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -18,14 +17,6 @@ public class UserDetailsImpl implements UserDetails {
     //包含着用户对应的所有Role，在使用时调用者给对象注入roles
     private List<Role> roles;
 
-    @Autowired
-    private RoleService roleService;
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    //无参构造
     public UserDetailsImpl() {
     }
 
@@ -42,11 +33,6 @@ public class UserDetailsImpl implements UserDetails {
         this.roles = roles;
     }
 
-    public List<Role> getRoles()
-    {
-        return roles;
-    }
-
     @Override
     //返回用户所有角色的封装，一个Role对应一个GrantedAuthority
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -55,6 +41,15 @@ public class UserDetailsImpl implements UserDetails {
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         }
         return authorities;
+    }
+
+    public List<Role> getRoles()
+    {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

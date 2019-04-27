@@ -1,7 +1,6 @@
 package com.youxiu326.security;
 
 import com.youxiu326.bean.User;
-import com.youxiu326.bean.UserDetailsImpl;
 import com.youxiu326.repository.UserDao;
 import com.youxiu326.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;

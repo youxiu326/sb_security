@@ -14,9 +14,6 @@ public interface ResourceDao extends JpaRepository<Resource, String> {
     @Query("select distinct r.resources from User as o left join o.roles as r where o.id = ?1")
     public List<Resource> findResourcesByOperator(String operatorId);
 
-    @Query("from Resource ")
-    public List<Resource> findAll();
-
     Resource findByUrl(String url);
 
     //自定义sql语句并且开启本地sql
@@ -25,7 +22,6 @@ public interface ResourceDao extends JpaRepository<Resource, String> {
     //public List<Role> findRolesOfUser(String username);
 
     //根据resource的主键查找resource允许的所有权限
-    //@Query(value = "select r.* from sys_role r, sys_role_resource rr where rr.resource_id = ?1 and rr.role_id = r.id", nativeQuery = true)
     @Query("select r from Role r left join r.resources as rs where rs.id=?1 ")
     public List<Role> findRolesOfResource(String resourceId);
 
