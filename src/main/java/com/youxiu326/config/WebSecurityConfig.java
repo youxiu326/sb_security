@@ -5,7 +5,6 @@ import com.youxiu326.security.MyAccessDeniedHandler;
 import com.youxiu326.security.MyFilterInvocationSecurityMetadataSourceImpl;
 import com.youxiu326.security.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -19,7 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -62,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //authoritiesByUsernameQuery 指定查询权限SQL
         //auth.jdbcAuthentication().dataSource(dataSource).usersByUsernameQuery(query).authoritiesByUsernameQuery(query);
 
-        //注入userDetailsService，需要实现userDetailsService接口
+        //注入userDetailsService，需要实现userDetailsService接口 并指定加密方式BCryptPasswordEncoder
         auth.userDetailsService(myUserDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
@@ -87,13 +85,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/hello").hasAuthority("ADMIN")
                 //.antMatchers("/js/**","/css/**","/images/*","/fonts/**","/**/*.png","/**/*.jpg","/**/*.ico").permitAll()
                 .and()
-                .formLogin()
-                .loginPage("/login")//自定义登录页面
-                .loginProcessingUrl("/user/login")// 自定义的登录接口
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .permitAll()
-                .failureHandler(new AuthenticationFailureHandler() {
+                .formLogin()                        //配置登录页面
+                .loginPage("/login")                //自定义登录页面
+                .loginProcessingUrl("/user/login")  //自定义的登录接口
+                .usernameParameter("username")      //指定页面中对应用户名的参数名称
+                .passwordParameter("password")      //指定页面中对应密码的参数名称
+                .permitAll()                        //配置登录页面所有人可以访问
+                .failureHandler(new AuthenticationFailureHandler() {//登陆失败后的操作
                     @Override
                     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
                         httpServletResponse.setContentType("application/json;charset=utf-8");
@@ -113,7 +111,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         out.close();
                     }
                 })
-                .successHandler(new AuthenticationSuccessHandler() {
+                .successHandler(new AuthenticationSuccessHandler() {//登录成功后的操作
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
                         httpServletResponse.setContentType("application/json;charset=utf-8");
@@ -127,30 +125,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 })
                 .and()
-                .logout()
-                .permitAll()
+                .logout()       //登出
+                .permitAll()    //所有人可以登出
                 .and()
                 .csrf()
                 .disable()
-                .exceptionHandling()
+                .exceptionHandling()        //配置自定义403响应
                 .accessDeniedHandler(myAccessDeniedHandler);
-    }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder  auth) throws  Exception {
-        auth.userDetailsService(myUserDetailsService)
-                .passwordEncoder(passwordEncoder());
-
-    }
-
-
-    /**
-     * 加密方式
-     * @return
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
 }
