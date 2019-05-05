@@ -17,7 +17,7 @@ WebSecurityConfig类中的
 
 .successHandler()和.failureHandler()定义了登陆页面的登陆成功和登录失败后所做的事情
 
-
+```
 
 package com.youxiu326.config;
 
@@ -158,7 +158,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 }
 
 
-
+```
 
 
 
