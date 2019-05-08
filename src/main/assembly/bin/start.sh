@@ -19,8 +19,8 @@ if [ -n "$PIDS" ]; then
 fi
 
 SERVER_NAME=`echo ${DEPLOY_DIR##*/}`
-SERVER_PROFILE=`sed '/spring.profiles.active/!d;s/.*=//' conf/application.properties | tr -d '\r'`
-SERVER_PORT=`sed '/server.port/!d;s/.*=//' conf/application-$SERVER_PROFILE.properties | tr -d '\r'`
+SERVER_PROFILE=`sed '/spring.profiles.active/!d;s/.*=//' conf/application.yml | tr -d '\r'`
+SERVER_PORT=`sed '/server.port/!d;s/.*=//' conf/application-$SERVER_PROFILE.yml | tr -d '\r'`
 if [ -n "$SERVER_PORT" ]; then
     SERVER_PORT_COUNT=`netstat -tln | grep $SERVER_PORT | wc -l`
     if [ $SERVER_PORT_COUNT -gt 0 ]; then
