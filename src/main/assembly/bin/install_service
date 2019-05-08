@@ -1,0 +1,40 @@
+#!/bin/bash
+cd `dirname $0`
+BIN_DIR=`pwd`
+cd ..
+DEPLOY_DIR=`pwd`
+
+SERVER_NAME=`echo ${DEPLOY_DIR##*/}`
+echo "默认名称$SERVER_NAME"
+read -p "请输入服务名称:" input
+
+if  [ -n "$input" ] ;then
+     SERVER_NAME=$input
+fi
+
+echo 服务名称 $SERVER_NAME
+
+TARGET_FILE=/etc/rc.d/init.d/$SERVER_NAME
+
+if [ -f "$TARGET_FILE" ];then
+	read -p "是否删除$TARGET_FILE[y/n]:" ok
+	if  [ "y" == "$ok" ] ;then
+		rm -f $TARGET_FILE
+	fi
+fi
+
+BASE_DIR=$DEPLOY_DIR
+
+echo BASE_DIR=$BASE_DIR >> $TARGET_FILE
+echo BIN_DIR=$BIN_DIR >> $TARGET_FILE
+echo "case \$1 in">>$TARGET_FILE
+echo "         start) su root $BIN_DIR/server.sh start;;" >>$TARGET_FILE
+echo "         stop) su root $BIN_DIR/server.sh stop;;" >>$TARGET_FILE
+echo "         restart) su root $BIN_DIR/server.sh restart;;" >>$TARGET_FILE
+echo "         *)  echo \"require start|stop|restart\";;" >>$TARGET_FILE
+echo "esac" >>$TARGET_FILE
+chmod 755 $TARGET_FILE
+
+echo "需要开机启动请执行"
+echo "chkconfig --add $SERVER_NAME"
+echo "chkconfig $SERVER_NAME on"
