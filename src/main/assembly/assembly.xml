@@ -1,0 +1,81 @@
+<!--
+可参考博客 https://blog.csdn.net/liupeifeng3514/article/details/79777976
+
+ format：指定打包类型；
+ includeBaseDirectory：指定是否包含打包层目录（
+        比如finalName是output，当值为true，所有文件被放在output目录下，否则直接放在包的根目录下
+    ）；
+ fileSets：指定要包含的文件集，可以定义多个fileSet；
+ directory：指定要包含的目录；
+ outputDirectory：指定当前要包含的目录的目的地。
+
+ -->
+<assembly>
+    <id>assembly</id>
+    <!-- 最终打包成一个tar.gz文件 -->
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <fileSets>
+
+<!--        <fileSet>
+            <directory>src/main/assembly/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+
+        <fileSet>
+            <directory>src/main/assembly/conf</directory>
+            <outputDirectory>conf</outputDirectory>
+            <fileMode>0644</fileMode>
+        </fileSet>-->
+
+        <!-- 把项目环境的配置文件，打包进tar.gz文件的config目录，并设置文件夹权限 指定运行配置文件 -->
+        <fileSet>
+            <directory>${project.build.directory}/classes</directory>
+            <includes>
+                <include>application.yml</include>
+                <include>application-${profileActive}.yml</include>
+            </includes>
+            <outputDirectory>conf</outputDirectory>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <!-- 把项目环境的所需要的jar包 打包进tar.gz文件的lib目录 -->
+        <fileSet>
+            <directory>${project.build.directory}</directory>
+            <includes>
+                <include>${project.build.finalName}.jar</include>
+            </includes>
+            <outputDirectory>lib</outputDirectory>
+        </fileSet>
+
+    </fileSets>
+
+
+</assembly>
+
+<!--
+ fileSet 里可以使用 includes 和 excludes 来更精确的控制哪些文件要添加，哪些文件要排除
+
+ 例如排除
+ <fileSet>
+    <directory>${project.build.directory}/classes</directory>
+    <outputDirectory>/</outputDirectory>
+    <excludes>
+        <exclude>**/*.txt</exclude>
+    </excludes>
+</fileSet>
+
+例如包含
+<fileSet>
+    <directory>${project.build.directory}/classes</directory>
+    <outputDirectory>/</outputDirectory>
+    <includes>
+        <include>**/*.class</include>
+    </includes>
+</fileSet>
+
+
+ -->
