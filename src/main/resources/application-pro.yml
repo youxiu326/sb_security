@@ -2,4 +2,4 @@ server:
   port: 8083
 
 logging:
-  config: conf/logback-spring.xml:
+  config: conf/logback-spring.xml
