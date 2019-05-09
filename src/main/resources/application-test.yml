@@ -2,5 +2,5 @@ server:
   port: 8082
 
 logging:
-  config: conf/logback-spring.xml
+  config: ../conf/logback-spring.xml
   #config: src/main/assembly/conf/logback-spring.xml
