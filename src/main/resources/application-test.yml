@@ -3,4 +3,3 @@ server:
 
 logging:
   config: ../conf/logback-spring.xml
-  #config: src/main/assembly/conf/logback-spring.xml
