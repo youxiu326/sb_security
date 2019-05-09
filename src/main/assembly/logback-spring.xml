@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+
+    <!-- 控制台输出配置 -->
+    <appender name ="console_out" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>%d %p (%file:%line\)- %m%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--  临界值过滤器（ThresholdFilter） -->
+    <appender name="info_out" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>log/info.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/info.%d.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern> %d %p (%file:%line\)- %m%n </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- 过滤掉TRACE和DEBUG级别的日志 大于或者等于info级别 -->
+            <level>info</level>
+        </filter>
+    </appender>
+
+    <!--  级别过滤器（LevelFilter） -->
+    <appender name="error_out" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>log/error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/error.%d.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern> %d %p (%file:%line\)- %m%n </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+
+    <!--  临界值过滤器（ThresholdFilter） -->
+    <appender name="user_out" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>log/user.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>log/user.%d.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern> %d %p (%file:%line\)- %m%n </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- 过滤掉TRACE级别的日志 大于或者等于debug级别 -->
+            <level>debug</level>
+        </filter>
+    </appender>
+
+    <root level="ALL">
+        <appender-ref ref="console_out"/>
+        <appender-ref ref="info_out"/>
+        <appender-ref ref="error_out"/>
+    </root>
+
+
+    <logger name="com.youxiu326.service.impl.UserServiceImpl" level="debug">
+        <appender-ref ref="user_out"/>
+    </logger>
+
+
+</configuration>
