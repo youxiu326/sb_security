@@ -16,9 +16,9 @@
 
     <!--  临界值过滤器（ThresholdFilter） -->
     <appender name="info_out" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>log/info.log</File>
+        <File>../log/info.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/info.%d.%i.log</fileNamePattern>
+            <fileNamePattern>../log/info.%d.%i.log</fileNamePattern>
             <maxHistory>30</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>5KB</maxFileSize>
@@ -36,9 +36,9 @@
 
     <!--  级别过滤器（LevelFilter） -->
     <appender name="error_out" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>log/error.log</File>
+        <File>../log/error.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/error.%d.%i.log</fileNamePattern>
+            <fileNamePattern>../log/error.%d.%i.log</fileNamePattern>
             <maxHistory>30</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>5KB</maxFileSize>
@@ -58,9 +58,9 @@
 
     <!--  临界值过滤器（ThresholdFilter） -->
     <appender name="user_out" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <File>log/user.log</File>
+        <File>../log/user.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>log/user.%d.%i.log</fileNamePattern>
+            <fileNamePattern>../log/user.%d.%i.log</fileNamePattern>
             <maxHistory>30</maxHistory>
             <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>5KB</maxFileSize>
