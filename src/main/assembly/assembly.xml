@@ -20,14 +20,14 @@
     <includeBaseDirectory>true</includeBaseDirectory>
     <fileSets>
 
-<!--
 
+       <!-- 将run.sh 打包进tar.gz文件的bin目录 -->
        <fileSet>
             <directory>src/main/assembly/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <fileMode>0755</fileMode>
         </fileSet>
--->
+
 
         <!-- 将logback-spring.xml 打包进tar.gz文件的conf目录 -->
         <fileSet>
