@@ -27,7 +27,7 @@ start(){
     if [ $? -eq "0" ]; then    # [$? -eq "0"] 说明pid不等于空 说明服务正在运行中，将进程号打印出来
         echo "${APP_NAME} running. pid=${pid}"
     else
-        nohup java -jar ./lib/$APP_NAME > log.file & # 说明pid为空 执行java -jar 命令启动服务
+        nohup java -jar ./lib/$APP_NAME > log.file 2>log.error &  # 说明pid为空 执行java -jar 命令启动服务
         echo "${APP_NAME} started"
     fi
 }
